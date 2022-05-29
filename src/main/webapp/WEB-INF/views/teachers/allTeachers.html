@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>teachers</title>
+    <style>
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+<table style="width: 50%">
+    <thead>
+    <tr style="background-color: beige; color: darkcyan">
+        <th>id</th>
+        <th>firstName</th>
+        <th>email</th>
+        <th>lastName</th>
+        <th>course</th>
+    </tr>
+    <tr th:each="teacher : ${teacherList}">
+        <td th:text="${teacher.id}"></td>
+        <td th:text="${teacher.firstName}"></td>
+        <td th:text="${teacher.email}"></td>
+        <td th:text="${teacher.lastName}"></td>
+<!--        <td th:text="${teacher.course}"></td>-->
+        <td>
+            <a th:href="@{'/api/course/'}">
+                <button>course</button>
+            </a>
+        </td>
+    </tr>
+    <a th:href="@{'/api/teachers/save'}">
+        <button>save</button>
+    </a>
+    </thead>
+</table>
+</body>
+</html>

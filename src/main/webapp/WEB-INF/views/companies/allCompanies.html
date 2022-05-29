@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>companies</title>
+    <style>
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+<table style="width: 50%">
+    <thead>
+    <tr style="background-color: beige; color: darkcyan">
+        <th>id</th>
+        <th>companyName</th>
+        <th>locatedCountry</th>
+        <th>courses</th>
+    </tr>
+    <tr th:each="company : ${companyList}">
+        <td th:text="${company.id}"></td>
+        <td th:text="${company.companyName}"></td>
+        <td th:text="${company.locatedCountry}"></td>
+<!--        <td th:text="${company.courses}"></td>-->
+        <td>
+            <a th:href="@{'/api/courses/'}">
+                <button>courses</button>
+            </a>
+        </td>
+    </tr>
+    <a th:href="@{'/api/companies/save'}">
+        <button>save</button>
+    </a>
+    </thead>
+</table>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>courses</title>
+    <style>
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+<table style="width: 50%">
+    <thead>
+    <tr style="background-color: beige; color: darkcyan">
+        <th>id</th>
+        <th>name</th>
+        <th>duration</th>
+        <th>companies</th>
+        <th>groups</th>
+        <th>teachers</th>
+    </tr>
+    <tr th:each="course : ${courseList}">
+        <td th:text="${course.id}"></td>
+        <td th:text="${course.name}"></td>
+        <td th:text="${course.duration}"></td>
+<!--        <td th:text="${course.company}"></td>-->
+<!--        <td th:text="${course.group}"></td>-->
+        <td>
+            <a th:href="@{/api/companies/}">
+                <button>companies</button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/api/groups/}">
+                <button>groups</button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/api/teachers/}">
+                <button>teachers</button>
+            </a>
+        </td>
+    </tr>
+    <a th:href="@{'/api/courses/save'}">
+        <button>save</button>
+    </a>
+    </thead>
+</table>
+</body>
+</html>
