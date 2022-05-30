@@ -1,6 +1,7 @@
 package thymeleaf.repositories;
 
 import org.springframework.stereotype.Repository;
+import thymeleaf.models.Course;
 import thymeleaf.models.Group;
 
 import javax.persistence.EntityManager;
@@ -38,11 +39,12 @@ public class GroupRepository {
     }
 
     @Transactional
-    public void update(UUID id, Group group){
+    public void update(Group group, UUID id){
         Group group1 = findById(id);
         group1.setGroupName(group.getGroupName());
         group1.setDateOfStart(group.getDateOfStart());
-        entityManager.merge(group1);
+        group1.setDateOfFinish(group.getDateOfFinish());
+        entityManager.persist(group1);
     }
 
     @Transactional

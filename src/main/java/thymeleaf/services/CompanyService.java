@@ -34,12 +34,13 @@ public class CompanyService {
         return companyRepository.findById(id);
     }
 
-//    @Transactional
-    public void update(UUID id, Company company){
-        companyRepository.update(id, company);
+    @Transactional
+    public void update(Company company, UUID id) {
+        companyRepository.update(company,id);
     }
 
-//    @Transactional
+
+    @Transactional
     public void deleteById(UUID id){
         companyRepository.deleteById(id);
     }

@@ -2,17 +2,15 @@ package thymeleaf.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import thymeleaf.models.Company;
 import thymeleaf.services.CompanyService;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
-@RequestMapping("/api/companies")
+@RequestMapping("api/companies")
 public class CompanyController {
 
     private final CompanyService companyService;
@@ -50,6 +48,20 @@ public class CompanyController {
 
         companyService.save(company);
 
+        return "redirect:/api/companies";
+    }
+
+    @GetMapping("/update/{id}")
+    public String editCompany(Model model, @PathVariable("id") UUID id){
+        model.addAttribute("company", companyService.findById(id));
+        return "companies/updateCompany";
+    }
+
+
+    @PostMapping("/{id}")
+    public String updateCompany(@ModelAttribute("company") Company company,
+                                @PathVariable("id") UUID id){
+        companyService.update(company, id);
         return "redirect:/api/companies";
     }
 }

@@ -18,6 +18,8 @@
         <th>companyName</th>
         <th>locatedCountry</th>
         <th>courses</th>
+        <th>update</th>
+        <th>delete</th>
     </tr>
     <tr th:each="company : ${companyList}">
         <td th:text="${company.id}"></td>
@@ -27,6 +29,11 @@
         <td>
             <a th:href="@{'/api/courses/'}">
                 <button>courses</button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{'/api/companies/update/' + ${company.getId()}}">
+                <button>update</button>
             </a>
         </td>
     </tr>

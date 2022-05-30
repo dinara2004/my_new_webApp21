@@ -2,14 +2,13 @@ package thymeleaf.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import thymeleaf.models.Group;
 import thymeleaf.models.Student;
 import thymeleaf.services.StudentService;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/api/students")
@@ -50,6 +49,32 @@ public class StudentController {
 
         studentService.save(student);
 
+        return "redirect:/api/students";
+    }
+
+    @GetMapping("/update/{id}")
+    public String editStudent(Model model, @PathVariable("id") UUID id){
+        model.addAttribute("student", studentService.findById(id));
+        return "students/updateStudent";
+    }
+
+    @GetMapping("/find/by/{courseId}") // /find/by/34895703985702938450
+    public String findAllStudentsByCourseId(@PathVariable UUID courseId, Model model) {
+
+        List<Student> students = studentService.findByCourseId(courseId);
+
+        model.addAttribute("students", students);
+        model.addAttribute("courseId", courseId);
+
+        return "students/allStudents";
+    }
+
+
+
+    @PostMapping("/{id}")
+    public String updateStudent(@ModelAttribute("student") Student student,
+                              @PathVariable("id") UUID id){
+        studentService.update(student, id);
         return "redirect:/api/students";
     }
 }

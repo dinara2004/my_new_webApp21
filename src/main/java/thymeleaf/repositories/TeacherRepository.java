@@ -39,12 +39,12 @@ public class TeacherRepository {
     }
 
     @Transactional
-    public void update(UUID id, Teacher teacher){
+    public void update(Teacher teacher, UUID id){
         Teacher teacher1 = findById(id);
         teacher1.setFirstName(teacher.getFirstName());
         teacher1.setEmail(teacher.getEmail());
         teacher1.setLastName(teacher.getLastName());
-        entityManager.merge(teacher1);
+        entityManager.persist(teacher1);
     }
 
     @Transactional

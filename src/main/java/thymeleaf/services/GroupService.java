@@ -1,11 +1,13 @@
 package thymeleaf.services;
 
 import org.springframework.stereotype.Service;
+import thymeleaf.models.Course;
 import thymeleaf.models.Group;
 import thymeleaf.repositories.GroupRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class GroupService {
@@ -26,5 +28,15 @@ public class GroupService {
         System.out.println(group.getGroupName());
         groupRepository.save(group);
         System.out.println("group successfully saved!");
+    }
+
+    @Transactional
+    public Group findById(UUID id){
+        return groupRepository.findById(id);
+    }
+
+    @Transactional
+    public void update(Group group, UUID id) {
+        groupRepository.update(group, id);
     }
 }

@@ -2,15 +2,13 @@ package thymeleaf.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import thymeleaf.models.Student;
 import thymeleaf.models.Teacher;
 import thymeleaf.services.TeacherService;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/api/teachers")
@@ -51,6 +49,20 @@ public class TeacherController {
 
         teacherService.save(teacher);
 
+        return "redirect:/api/teachers";
+    }
+
+    @GetMapping("/update/{id}")
+    public String editTeacher(Model model, @PathVariable("id") UUID id){
+        model.addAttribute("teacher", teacherService.findById(id));
+        return "teachers/updateTeacher";
+    }
+
+
+    @PostMapping("/{id}")
+    public String updateTeacher(@ModelAttribute("teacher") Teacher teacher,
+                                @PathVariable("id") UUID id){
+        teacherService.update(teacher, id);
         return "redirect:/api/teachers";
     }
 }

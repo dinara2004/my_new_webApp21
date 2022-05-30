@@ -7,7 +7,7 @@
 </head>
 <body>
 <form action="#"
-      th:action="@{/api/groups/save}"
+      th:action="@{'/api/groups/save/' + ${group.getId()}}"
       method="post"
       th:object="${emptyGroup}">
 

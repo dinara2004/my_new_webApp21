@@ -39,11 +39,19 @@ public class StudentRepository {
     }
 
     @Transactional
-    public void update(UUID id, Student student){
+    public void update(Student student, UUID id){
         Student student1 = findById(id);
         student1.setName(student.getName());
         student1.setEmail(student.getEmail());
-        entityManager.merge(student1);
+        student1.setStudyFormat(student.getStudyFormat());
+        entityManager.persist(student1);
+    }
+
+    public List<Student> findByCourseId(UUID courseId) {
+        return entityManager
+                .createQuery("select s from Student s where (select c from Course c where c.id = ?1) member of s.courses", Student.class)
+                .setParameter(1, courseId)
+                .getResultList();
     }
 
     @Transactional

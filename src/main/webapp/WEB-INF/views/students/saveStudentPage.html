@@ -7,7 +7,7 @@
 </head>
 <body>
 <form action="#"
-      th:action="@{/api/students/save}"
+      th:action="@{'/api/students/save' + ${student.getId()}}"
       method="post"
       th:object="${emptyStudent}">
 

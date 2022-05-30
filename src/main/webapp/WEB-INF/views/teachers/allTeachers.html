@@ -19,6 +19,7 @@
         <th>email</th>
         <th>lastName</th>
         <th>course</th>
+        <th>update</th>
     </tr>
     <tr th:each="teacher : ${teacherList}">
         <td th:text="${teacher.id}"></td>
@@ -27,8 +28,13 @@
         <td th:text="${teacher.lastName}"></td>
 <!--        <td th:text="${teacher.course}"></td>-->
         <td>
-            <a th:href="@{'/api/course/'}">
+            <a th:href="@{'/api/course/' + ${teacher.getId()}}">
                 <button>course</button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{'/api/teachers/update/' + ${teacher.getId()}}">
+                <button>update</button>
             </a>
         </td>
     </tr>

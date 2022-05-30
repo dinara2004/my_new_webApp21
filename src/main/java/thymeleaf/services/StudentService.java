@@ -7,6 +7,7 @@ import thymeleaf.repositories.StudentRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class StudentService {
@@ -27,5 +28,19 @@ public class StudentService {
         System.out.println(student.getName());
         studentRepository.save(student);
         System.out.println("student successfully saved!");
+    }
+
+    @Transactional
+    public Student findById(UUID id){
+        return studentRepository.findById(id);
+    }
+
+    public List<Student> findByCourseId(UUID courseId) {
+        return studentRepository.findByCourseId(courseId);
+    }
+
+    @Transactional
+    public void update(Student student, UUID id) {
+        studentRepository.update(student, id);
     }
 }

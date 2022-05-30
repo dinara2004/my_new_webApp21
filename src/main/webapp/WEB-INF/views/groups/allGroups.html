@@ -20,22 +20,26 @@
         <th>dateOfFinish</th>
         <th>courses</th>
         <th>students</th>
+        <th>update</th>
     </tr>
     <tr th:each="group : ${groupList}">
         <td th:text="${group.id}"></td>
         <td th:text="${group.groupName}"></td>
         <td th:text="${group.dateOfStart}"></td>
         <td th:text="${group.dateOfFinish}"></td>
-<!--        <td th:text="${group.courses}"></td>-->
-<!--        <td th:text="${group.students}"></td>-->
         <td>
-            <a th:href="@{'/api/courses/'}">
+            <a th:href="@{'/api/courses/' + ${group.getId()}}">
                 <button>courses</button>
             </a>
         </td>
         <td>
-            <a th:href="@{'/api/students/'}">
+            <a th:href="@{'/api/students/' + ${group.getId()}}">
                 <button>students</button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{'/api/groups/update/' + ${group.getId()}}">
+                <button>update</button>
             </a>
         </td>
     </tr>

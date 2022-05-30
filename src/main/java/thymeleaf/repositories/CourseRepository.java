@@ -40,12 +40,13 @@ public class CourseRepository {
     }
 
     @Transactional
-    public void update(UUID id, Course course){
+    public void update(Course course, UUID id){
         Course course1 = findById(id);
         course1.setName(course.getName());
         course1.setDuration(course.getDuration());
-        entityManager.merge(course1);
+        entityManager.persist(course1);
     }
+
 
     @Transactional
     public void deleteById(UUID courseId) {

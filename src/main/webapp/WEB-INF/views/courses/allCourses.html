@@ -20,13 +20,12 @@
         <th>companies</th>
         <th>groups</th>
         <th>teachers</th>
+        <th>update</th>
     </tr>
     <tr th:each="course : ${courseList}">
         <td th:text="${course.id}"></td>
         <td th:text="${course.name}"></td>
         <td th:text="${course.duration}"></td>
-<!--        <td th:text="${course.company}"></td>-->
-<!--        <td th:text="${course.group}"></td>-->
         <td>
             <a th:href="@{/api/companies/}">
                 <button>companies</button>
@@ -40,6 +39,11 @@
         <td>
             <a th:href="@{/api/teachers/}">
                 <button>teachers</button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{'/api/courses/update/' + ${course.getId()}}">
+                <button>update</button>
             </a>
         </td>
     </tr>

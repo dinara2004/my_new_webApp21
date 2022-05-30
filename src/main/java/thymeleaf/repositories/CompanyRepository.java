@@ -5,6 +5,7 @@ import thymeleaf.models.Company;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
@@ -39,11 +40,11 @@ public class CompanyRepository {
     }
 
     @Transactional
-    public void update(UUID id, Company company){
+    public void update(Company company, UUID id){
         Company company1 = findById(id);
         company1.setCompanyName(company.getCompanyName());
         company1.setLocatedCountry(company.getLocatedCountry());
-        entityManager.merge(company1);
+        entityManager.persist(company1);
     }
 
     @Transactional
