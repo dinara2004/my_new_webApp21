@@ -2,9 +2,11 @@ package thymeleaf.repositories;
 
 import org.springframework.stereotype.Repository;
 import thymeleaf.models.Company;
+import thymeleaf.models.Course;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -31,15 +33,12 @@ public class CompanyRepository {
         entityManager.getTransaction().begin();
         entityManager.persist(company);
         entityManager.getTransaction().commit();
-//        entityManager.close();
     }
 
-    @Transactional
     public Company findById(UUID companyId) {
         return entityManager.find(Company.class, companyId);
     }
 
-    @Transactional
     public void update(Company company, UUID id){
         Company company1 = findById(id);
         company1.setCompanyName(company.getCompanyName());
@@ -47,8 +46,24 @@ public class CompanyRepository {
         entityManager.persist(company1);
     }
 
-    @Transactional
     public void deleteById(UUID companyId) {
-        entityManager.remove(entityManager.find(Company.class, companyId));
+        entityManager.remove(findById(companyId));
+    }
+
+    public void save(Course course, UUID id) {
+
+        final EntityTransaction transaction = entityManager.getTransaction();
+
+        transaction.begin();
+
+        final Company company = entityManager.find(Company.class, id);
+
+        course.setCompany(company);
+
+        company.setCourse(course);
+
+        entityManager.persist(course);
+
+        transaction.commit();
     }
 }

@@ -1,8 +1,8 @@
 package thymeleaf.services;
 
 import org.springframework.stereotype.Service;
-import thymeleaf.models.Company;
 import thymeleaf.models.Course;
+import thymeleaf.repositories.CompanyRepository;
 import thymeleaf.repositories.CourseRepository;
 
 import javax.transaction.Transactional;
@@ -13,30 +13,31 @@ import java.util.UUID;
 public class CourseService {
 
     private final CourseRepository courseRepository;
+    private final CompanyRepository companyRepository;
 
-    public CourseService(CourseRepository courseRepository) {
+    public CourseService(CourseRepository courseRepository, CompanyRepository companyRepository) {
         this.courseRepository = courseRepository;
+        this.companyRepository = companyRepository;
     }
 
-    @Transactional
     public List<Course> findAllCourses() {
         return courseRepository.findAll();
     }
 
-    @Transactional
-    public void save(Course course) {
-        System.out.println(course.getName());
-        courseRepository.save(course);
-        System.out.println("course successfully saved!");
+    public void save(Course course, UUID id) {
+        companyRepository.save(course, id);
+//        courseRepository.save(course);
     }
 
-    @Transactional
-    public Course findById(UUID id){
+    public Course findById(UUID id) {
         return courseRepository.findById(id);
     }
 
-    @Transactional
     public void update(Course course, UUID id) {
         courseRepository.update(course, id);
+    }
+
+    public List<Course> findAllCoursesById(UUID id) {
+        return courseRepository.findAllCoursesById(id);
     }
 }

@@ -21,14 +21,14 @@
         <th>groups</th>
         <th>update</th>
     </tr>
-    <tr th:each="student : ${studentList}">
+    <tr th:each="student : ${students}">
         <td th:text="${student.id}"></td>
         <td th:text="${student.name}"></td>
         <td th:text="${student.email}"></td>
         <td th:text="${student.studyFormat}"></td>
 <!--        <td th:text="${student.groups}"></td>-->
         <td>
-            <a th:href="@{'/api/groups/' + ${student.getId()}}">
+            <a th:href="@{'/api/groups/findBy/' + ${student.getId()}}">
                 <button>groups</button>
             </a>
         </td>
@@ -38,7 +38,7 @@
             </a>
         </td>
     </tr>
-    <a th:href="@{'/api/students/save'}">
+    <a th:href="@{'/api/students/save/' + ${groupId}}">
         <button>save</button>
     </a>
     </thead>

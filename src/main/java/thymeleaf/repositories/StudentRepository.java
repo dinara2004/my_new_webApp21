@@ -6,6 +6,7 @@ import thymeleaf.models.Student;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
@@ -27,7 +28,7 @@ public class StudentRepository {
     }
 
     @Transactional
-    public void save(Student student) {
+    public void save(Student student, UUID id) {
         entityManager.getTransaction().begin();
         entityManager.persist(student);
         entityManager.getTransaction().commit();
@@ -38,7 +39,6 @@ public class StudentRepository {
         return entityManager.find(Student.class, studentId);
     }
 
-    @Transactional
     public void update(Student student, UUID id){
         Student student1 = findById(id);
         student1.setName(student.getName());
@@ -47,11 +47,20 @@ public class StudentRepository {
         entityManager.persist(student1);
     }
 
-    public List<Student> findByCourseId(UUID courseId) {
-        return entityManager
-                .createQuery("select s from Student s where (select c from Course c where c.id = ?1) member of s.courses", Student.class)
-                .setParameter(1, courseId)
-                .getResultList();
+    public List<Student> findAllStudentsById(UUID groupId) {
+
+        final EntityTransaction transaction = entityManager.getTransaction();
+
+        transaction.begin();
+
+        final List<Student> students = entityManager.createQuery
+                        ("select s from Student s join Group g on g.id=?1", Student.class).
+                setParameter(1, groupId).
+                getResultList();
+
+        transaction.commit();
+
+        return students;
     }
 
     @Transactional

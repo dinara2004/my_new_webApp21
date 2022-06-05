@@ -27,10 +27,11 @@ public class Student {
 
     private StudyFormat studyFormat;
 
-//    @ManyToMany
-//    private List<Course> courses = new ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ToString.Exclude
+    private List<Course> courses = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private Group groups;
 
 }

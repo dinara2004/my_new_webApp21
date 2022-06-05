@@ -3,6 +3,7 @@ package thymeleaf.services;
 import org.springframework.stereotype.Service;
 import thymeleaf.models.Course;
 import thymeleaf.models.Group;
+import thymeleaf.repositories.CourseRepository;
 import thymeleaf.repositories.GroupRepository;
 
 import javax.transaction.Transactional;
@@ -13,9 +14,11 @@ import java.util.UUID;
 public class GroupService {
 
     private final GroupRepository groupRepository;
+    private final CourseRepository courseRepository;
 
-    public GroupService(GroupRepository groupRepository) {
+    public GroupService(GroupRepository groupRepository, CourseRepository courseRepository) {
         this.groupRepository = groupRepository;
+        this.courseRepository = courseRepository;
     }
 
     @Transactional
@@ -24,10 +27,11 @@ public class GroupService {
     }
 
     @Transactional
-    public void save(Group group) {
-        System.out.println(group.getGroupName());
+    public void save(Group group, UUID courseId) {
+        Course byId = courseRepository.findById(courseId);
+        group.setCourse(byId);
+        byId.setGroup(group);
         groupRepository.save(group);
-        System.out.println("group successfully saved!");
     }
 
     @Transactional
@@ -38,5 +42,9 @@ public class GroupService {
     @Transactional
     public void update(Group group, UUID id) {
         groupRepository.update(group, id);
+    }
+
+    public List<Group> findAllGroupsById(UUID id) {
+        return groupRepository.findAllGroupsById(id);
     }
 }

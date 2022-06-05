@@ -34,47 +34,49 @@ public class StudentController {
         return "/students/allStudents";
     }
 
-    @GetMapping("/save")
-    public String saveStudentPage(Model model) {
+    @GetMapping("/findBy/{id}") // /find/by/34895703985702938450
+    public String findByGroupsId(@PathVariable UUID id, Model model) {
+
+        List<Student> students = studentService.findAllStudentsById(id);
+
+        model.addAttribute("students", students);
+        model.addAttribute("groupId", id);
+
+        return "/students/allStudents";
+    }
+
+    @GetMapping("/save/{id}")
+    public String saveStudentPage(Model model, @PathVariable UUID id) {
 
         model.addAttribute("emptyStudent", new Student());
+
+        model.addAttribute("groupId", id);
 
         return "/students/saveStudentPage";
     }
 
-    @PostMapping("/save")
-    public String saveStudent(Student student) {
+    @PostMapping("/save/{id}")
+    public String saveStudent(Student student,
+                              @PathVariable UUID id) {
 
-        System.out.println(student);
+        studentService.save(student, id);
 
-        studentService.save(student);
-
-        return "redirect:/api/students";
+        return "redirect:/api/students/findBy/" + id;
     }
 
     @GetMapping("/update/{id}")
-    public String editStudent(Model model, @PathVariable("id") UUID id){
-        model.addAttribute("student", studentService.findById(id));
+    public String editStudent(Model model, @PathVariable UUID id){
+        Student student = studentService.findById(id);
+        model.addAttribute("student", student);
         return "students/updateStudent";
     }
 
-    @GetMapping("/find/by/{courseId}") // /find/by/34895703985702938450
-    public String findAllStudentsByCourseId(@PathVariable UUID courseId, Model model) {
-
-        List<Student> students = studentService.findByCourseId(courseId);
-
-        model.addAttribute("students", students);
-        model.addAttribute("courseId", courseId);
-
-        return "students/allStudents";
-    }
-
-
-
-    @PostMapping("/{id}")
-    public String updateStudent(@ModelAttribute("student") Student student,
-                              @PathVariable("id") UUID id){
+    @PostMapping("/update/{id}")
+    public String updateStudent(Student student,
+                              @PathVariable UUID id){
+        Student byId = studentService.findById(id);
+        UUID id1 = byId.getGroups().getId();
         studentService.update(student, id);
-        return "redirect:/api/students";
+        return "redirect:/api/students/findBy/" + id1;
     }
 }

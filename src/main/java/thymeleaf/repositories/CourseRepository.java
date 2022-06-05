@@ -1,11 +1,11 @@
 package thymeleaf.repositories;
 
 import org.springframework.stereotype.Repository;
-import thymeleaf.models.Company;
 import thymeleaf.models.Course;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
@@ -31,7 +31,6 @@ public class CourseRepository {
         entityManager.getTransaction().begin();
         entityManager.persist(course);
         entityManager.getTransaction().commit();
-//        entityManager.close();
     }
 
     @Transactional
@@ -39,7 +38,6 @@ public class CourseRepository {
         return entityManager.find(Course.class, courseId);
     }
 
-    @Transactional
     public void update(Course course, UUID id){
         Course course1 = findById(id);
         course1.setName(course.getName());
@@ -52,4 +50,17 @@ public class CourseRepository {
     public void deleteById(UUID courseId) {
         entityManager.remove(entityManager.find(Course.class, courseId));
     }
+
+
+    public List<Course> findAllCoursesById(UUID id) {
+
+        final List<Course> courses = entityManager.createQuery
+                        ("select c from Course c where c.company.id = ?1", Course.class)
+                .setParameter(1, id)
+                .getResultList();
+
+        return courses;
+    }
 }
+
+

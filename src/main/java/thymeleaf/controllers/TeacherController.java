@@ -3,7 +3,6 @@ package thymeleaf.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import thymeleaf.models.Student;
 import thymeleaf.models.Teacher;
 import thymeleaf.services.TeacherService;
 
@@ -26,43 +25,49 @@ public class TeacherController {
         return teacherService.findAllTeachers();
     }
 
-    @GetMapping
-    public String findAll(Model model) {
+    @GetMapping("/findBy/{id}") // /find/by/34895703985702938450
+    public String findByCourseId(@PathVariable UUID id, Model model) {
 
-        model.addAttribute("teacher", teacherService.findAllTeachers());
+        List<Teacher> teachers = teacherService.findAllTeachersById(id);
+
+        model.addAttribute("teachers", teachers);
+        model.addAttribute("courseId", id);
 
         return "/teachers/allTeachers";
     }
-
-    @GetMapping("/save")
-    public String saveTeacherPage(Model model) {
+    @GetMapping("/save/{id}")
+    public String saveTeacherPage(Model model, @PathVariable UUID id) {
 
         model.addAttribute("emptyTeacher", new Teacher());
+
+        model.addAttribute("id", id);
 
         return "/teachers/saveTeacherPage";
     }
 
-    @PostMapping("/save")
-    public String saveTeacher(Teacher teacher) {
+    @PostMapping("/save/{id}")
+    public String saveTeacher(Teacher teacher,
+                              @PathVariable("id") UUID id) {
 
-        System.out.println(teacher);
+        teacherService.save(teacher, id);
 
-        teacherService.save(teacher);
-
-        return "redirect:/api/teachers";
+        return "redirect:/api/teachers/findBy/" + id;
     }
 
     @GetMapping("/update/{id}")
-    public String editTeacher(Model model, @PathVariable("id") UUID id){
-        model.addAttribute("teacher", teacherService.findById(id));
+    public String editTeacher(Model model, @PathVariable UUID id){
+        Teacher teacher = teacherService.findById(id);
+        model.addAttribute("teacher", teacher);
         return "teachers/updateTeacher";
     }
 
 
-    @PostMapping("/{id}")
-    public String updateTeacher(@ModelAttribute("teacher") Teacher teacher,
-                                @PathVariable("id") UUID id){
+    @PostMapping("/update/{id}")
+    public String updateTeacher(Teacher teacher,
+                                @PathVariable UUID id){
+        Teacher byId = teacherService.findById(id);
+        UUID id1 = byId.getCourse().getId();
         teacherService.update(teacher, id);
-        return "redirect:/api/teachers";
+        return "redirect:/api/teachers/findBy/" + id1;
     }
 }

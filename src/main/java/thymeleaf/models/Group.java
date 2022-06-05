@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static javax.persistence.CascadeType.*;
+
 @Entity
 @Table(name = "groups")
 @NoArgsConstructor
@@ -27,11 +29,15 @@ public class Group {
     @Column(name = "date_of_finish")
     private String dateOfFinish;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(cascade = {MERGE, CascadeType.REFRESH})
     @ToString.Exclude
-    private List<Course> courses;
+    private List<Course> courses = new ArrayList<>();
 
-    @OneToMany(mappedBy = "groups")
+    @OneToMany(mappedBy = "groups",cascade = {MERGE,REFRESH,REMOVE,DETACH})
     @ToString.Exclude
     private List<Student> students = new ArrayList<>();
+
+    public void setCourse(Course course){
+        this.courses.add(course);
+    }
 }

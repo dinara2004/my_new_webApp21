@@ -3,7 +3,6 @@ package thymeleaf.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import thymeleaf.models.Company;
 import thymeleaf.models.Course;
 import thymeleaf.services.CourseService;
 
@@ -26,45 +25,60 @@ public class CourseController {
         return courseService.findAllCourses();
     }
 
-    @GetMapping
-    public String findAll(Model model) {
+    @GetMapping("/findBy/{id}") // /find/by/34895703985702938450
+    public String findByCompanyId(@PathVariable UUID id, Model model) {
 
-        model.addAttribute("course", courseService.findAllCourses());
+        List<Course> courses = courseService.findAllCoursesById(id);
+
+        model.addAttribute( "courses", courses);
+        model.addAttribute("companyId", id);
 
         return "/courses/allCourses";
     }
 
-    @GetMapping("/save")
-    public String saveCoursePage(Model model) {
+
+    @GetMapping("/save/{id}")
+    public String saveCoursePage(Model model, @PathVariable UUID id) {
 
         model.addAttribute("emptyCourse", new Course());
+
+        model.addAttribute("id", id);
 
         return "/courses/saveCoursePage";
     }
 
-    @PostMapping("/save")
-    public String saveCourse(Course course) {
+    @PostMapping("/save/{id}")
+    public String saveCourse(Course course,
+                             @PathVariable("id") UUID id) {
 
-        System.out.println(course);
+        courseService.save(course, id);
 
-        courseService.save(course);
-
-        return "redirect:/api/courses";
+        return "redirect:/api/courses/findBy/" + id;
     }
 
     @GetMapping("/update/{id}")
-    public String editCourse(Model model, @PathVariable("id") UUID id){
-        model.addAttribute("course", courseService.findById(id));
+    public String editCourse(Model model, @PathVariable UUID id){
+
+        Course course = courseService.findById(id);
+        model.addAttribute("course", course);
         return "courses/updateCourse";
     }
 
 
-    @PostMapping("/{id}")
-    public String updateCourse(@ModelAttribute("course") Course course,
-                                @PathVariable("id") UUID id){
+    @PostMapping("/update/{id}")
+    public String updateCourse(Course course,
+                                @PathVariable UUID id){
+        Course byId = courseService.findById(id);
+        UUID id1 = byId.getCompany().getId();
         courseService.update(course, id);
-        return "redirect:/api/courses";
+        return "redirect:/api/courses/findBy/" + id1;
     }
 
-
+//    @PostMapping ("/update/{courseId}")
+//    public String update(Course course, @PathVariable Long courseId){
+//        Course byId = courseService.findById(courseId);
+//        Long id = byId.getCompany().getId();
+//        courseService.update(courseId, course);
+//        return "redirect:/api/courses/find/by/" + id;
+//    }
 }

@@ -7,9 +7,11 @@
 </head>
 <body>
 <form action="#"
-      th:action="@{'/api/groups/save/' + ${group.getId()}}"
+      th:action="@{'/api/groups/save/' + ${id}}"
       method="post"
       th:object="${emptyGroup}">
+
+    <input type="hidden" th:field="${emptyGroup.id}">
 
     <label for="name">name</label>
     <input id="name" th:field="${emptyGroup.groupName}" placeholder="example">

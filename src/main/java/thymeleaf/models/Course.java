@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static javax.persistence.CascadeType.REMOVE;
+
 @Entity
 @Table(name = "courses")
 @NoArgsConstructor
@@ -22,20 +24,23 @@ public class Course {
     private String name;
     private String duration;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id")
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Company company;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
-    mappedBy = "courses")
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH},mappedBy = "courses")
     @ToString.Exclude
-    private List<Group> group;
+    private List<Group> groups = new ArrayList<>();
 
-//    @ManyToMany(mappedBy = "courses")
-//    @ToString.Exclude
-//    private List<Student> students = new ArrayList<>();
+    @ManyToMany(mappedBy = "courses")
+    @ToString.Exclude
+    private List<Student> students = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(mappedBy = "course",
+            cascade = {REMOVE},
+            orphanRemoval = true)
     private Teacher teacher;
 
+    public void setGroup(Group group){
+        this.groups.add(group);
+    }
 }

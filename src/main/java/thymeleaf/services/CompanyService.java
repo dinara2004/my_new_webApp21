@@ -34,7 +34,6 @@ public class CompanyService {
         return companyRepository.findById(id);
     }
 
-    @Transactional
     public void update(Company company, UUID id) {
         companyRepository.update(company,id);
     }

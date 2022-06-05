@@ -7,9 +7,11 @@
 </head>
 <body>
 <form action="#"
-      th:action="@{'/api/students/save' + ${student.getId()}}"
+      th:action="@{'/api/students/save/' + ${id}}"
       method="post"
       th:object="${emptyStudent}">
+
+    <input type="hidden" th:field="${emptyStudent.id}">
 
     <label for="name">name</label>
     <input id="name" th:field="${emptyStudent.name}" placeholder="example">
@@ -27,7 +29,7 @@
 </form>
 
 <div>
-    <a th:href="@{/api/groups}">
+    <a th:href="@{/api/groups/}">
         <button>go back</button>
     </a>
 </div>

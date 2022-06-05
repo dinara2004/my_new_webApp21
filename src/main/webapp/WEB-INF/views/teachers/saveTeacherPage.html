@@ -3,13 +3,15 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>save new teachers</title>
+    <title>save new teacher</title>
 </head>
 <body>
 <form action="#"
-      th:action="@{'/api/teachers/save'}"
+      th:action="@{'/api/teachers/save/' + ${id}}"
       method="post"
       th:object="${emptyTeacher}">
+
+    <input type="hidden" th:field="${emptyTeacher.id}">
 
     <label for="name">name</label>
     <input id="name" th:field="${emptyTeacher.firstName}" placeholder="example">
@@ -27,7 +29,7 @@
 </form>
 
 <div>
-    <a th:href="@{/api/course}">
+    <a th:href="@{/api/course/}">
         <button>go back</button>
     </a>
 </div>

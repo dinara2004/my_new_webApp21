@@ -3,6 +3,7 @@ package thymeleaf.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import thymeleaf.models.Course;
 import thymeleaf.models.Group;
 import thymeleaf.services.GroupService;
 
@@ -25,43 +26,58 @@ public class GroupController {
         return groupService.findAllGroups();
     }
 
-    @GetMapping
-    public String findAll(Model model) {
+    @GetMapping("/findBy/{id}") // /find/by/34895703985702938450
+    public String findByCourseId(@PathVariable UUID id, Model model) {
 
-        model.addAttribute("group", groupService.findAllGroups());
+        List<Group> groups = groupService.findAllGroupsById(id);
+
+        model.addAttribute("groups", groups);
+        model.addAttribute("courseId", id);
 
         return "/groups/allGroups";
     }
 
-    @GetMapping("/save")
-    public String saveGroupPage(Model model) {
+//    @GetMapping
+//    public String findAll(Model model) {
+//
+//        model.addAttribute("group", groupService.findAllGroups());
+//
+//        return "/groups/allGroups";
+//    }
+
+    @GetMapping("/save/{id}")
+    public String saveGroupPage(Model model, @PathVariable UUID id) {
 
         model.addAttribute("emptyGroup", new Group());
+
+        model.addAttribute("id", id);
 
         return "/groups/saveGroupPage";
     }
 
-    @PostMapping("/save")
-    public String saveCourse(Group group) {
+    @PostMapping("/save/{id}")
+    public String saveGroup(Group group,
+                             @PathVariable("id") UUID id) {
 
-        System.out.println(group);
+        groupService.save(group, id);
 
-        groupService.save(group);
-
-        return "redirect:/api/groups";
+        return "redirect:/api/groups/findBy/" + id;
     }
 
     @GetMapping("/update/{id}")
-    public String editGroup(Model model, @PathVariable("id") UUID id){
-        model.addAttribute("group", groupService.findById(id));
+    public String editGroup(Model model, @PathVariable UUID id){
+        Group group = groupService.findById(id);
+        model.addAttribute("group", group);
         return "groups/updateGroup";
     }
 
 
-    @PostMapping("/{id}")
-    public String updateGroup(@ModelAttribute("group") Group group,
-                               @PathVariable("id") UUID id){
+    @PostMapping("/update/{id}")
+    public String updateGroup(Group group,
+                               @PathVariable UUID id){
+        Group byId = groupService.findById(id);
+        UUID id1 = byId.getCourses().get(0).getId();
         groupService.update(group, id);
-        return "redirect:/api/groups";
+        return "redirect:/api/groups/findBy/" + id1;
     }
 }

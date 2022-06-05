@@ -1,11 +1,11 @@
 package thymeleaf.repositories;
 
 import org.springframework.stereotype.Repository;
-import thymeleaf.models.Course;
 import thymeleaf.models.Group;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
@@ -38,7 +38,7 @@ public class GroupRepository {
         return entityManager.find(Group.class, groupId);
     }
 
-    @Transactional
+
     public void update(Group group, UUID id){
         Group group1 = findById(id);
         group1.setGroupName(group.getGroupName());
@@ -50,5 +50,24 @@ public class GroupRepository {
     @Transactional
     public void deleteById(UUID groupId) {
         entityManager.remove(entityManager.find(Group.class, groupId));
+    }
+
+
+    public List<Group> findAllGroupsById(UUID courseId) {
+
+        final EntityTransaction transaction = entityManager.getTransaction();
+
+        transaction.begin();
+
+        final List<Group> groups = entityManager.createQuery
+                        ("select g from Group  g where " +
+                                "(select c from Course c where c.id=?1) member of g.courses", Group.class)
+                .setParameter(1, courseId)
+                .getResultList();
+
+
+        transaction.commit();
+
+        return groups;
     }
 }

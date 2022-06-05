@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" >
+      xmlns:th="http://www.thymeleaf.org" xmlns:margin="http://www.w3.org/1999/xhtml"
+      xmlns:width="http://www.w3.org/1999/xhtml">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta charset="UTF-8">
     <title>save new company</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous"/>
 </head>
 <body>
 <form action="#"
@@ -11,21 +18,33 @@
       method="post"
       th:object="${emptyCompany}">
 
-    <label for="name">name</label>
-    <input id="name" th:field="${emptyCompany.companyName}" placeholder="example">
+    <label for="name">Company Name</label>
+    <input style="text-align: center; width: 500px; margin: auto" type="text"
+            id="name"
+            th:field="${emptyCompany.companyName}"
+            placeholder="example">
     <br><br>
 
-    <label for="locatedCountry">locatedCountry</label>
-    <input id="locatedCountry" th:field="${emptyCompany.locatedCountry}" placeholder="example">
+    <label for="locatedCountry">Located Country</label>
+    <input style="text-align: center; width: 500px; margin: auto"
+           id="locatedCountry"
+           type="text"
+           th:field="${emptyCompany.locatedCountry}"
+           placeholder="example">
     <br><br>
 
-    <button type="submit">save</button>
+    <div type="submit" style="width: 700px; margin: auto;">
+    <button>save</button>
+    </div>
 </form>
 
-<div>
+<div style="width: 500px; margin: auto;">
     <a th:href="@{'/api/companies/'}">
         <button>go back</button>
     </a>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 </body>
 </html>

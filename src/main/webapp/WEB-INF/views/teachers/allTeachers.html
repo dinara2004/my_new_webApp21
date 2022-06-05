@@ -21,14 +21,14 @@
         <th>course</th>
         <th>update</th>
     </tr>
-    <tr th:each="teacher : ${teacherList}">
+    <tr th:each="teacher : ${teachers}">
         <td th:text="${teacher.id}"></td>
         <td th:text="${teacher.firstName}"></td>
         <td th:text="${teacher.email}"></td>
         <td th:text="${teacher.lastName}"></td>
 <!--        <td th:text="${teacher.course}"></td>-->
         <td>
-            <a th:href="@{'/api/course/' + ${teacher.getId()}}">
+            <a th:href="@{'/api/courses/findBy/' + ${teachers.get(0).getCourse().getCompany().getId()}}">
                 <button>course</button>
             </a>
         </td>
@@ -38,7 +38,7 @@
             </a>
         </td>
     </tr>
-    <a th:href="@{'/api/teachers/save'}">
+    <a th:href="@{'/api/teachers/save/'  + ${id}}">
         <button>save</button>
     </a>
     </thead>

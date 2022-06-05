@@ -1,8 +1,9 @@
 package thymeleaf.services;
 
 import org.springframework.stereotype.Service;
-import thymeleaf.models.Student;
+import thymeleaf.models.Course;
 import thymeleaf.models.Teacher;
+import thymeleaf.repositories.CourseRepository;
 import thymeleaf.repositories.TeacherRepository;
 
 import javax.transaction.Transactional;
@@ -13,9 +14,11 @@ import java.util.UUID;
 public class TeacherService {
 
     private final TeacherRepository teacherRepository;
+    private final CourseRepository courseRepository;
 
-    public TeacherService(TeacherRepository teacherRepository) {
+    public TeacherService(TeacherRepository teacherRepository, CourseRepository courseRepository) {
         this.teacherRepository = teacherRepository;
+        this.courseRepository = courseRepository;
     }
 
     @Transactional
@@ -24,13 +27,13 @@ public class TeacherService {
     }
 
     @Transactional
-    public void save(Teacher teacher) {
-        System.out.println(teacher.getFirstName());
+    public void save(Teacher teacher, UUID courseId) {
+        final Course byId = courseRepository.findById(courseId);
+        teacher.setCourse(byId);
+        byId.setTeacher(teacher);
         teacherRepository.save(teacher);
-        System.out.println("teacher successfully saved!");
     }
 
-    @Transactional
     public Teacher findById(UUID id){
         return teacherRepository.findById(id);
     }
@@ -38,5 +41,9 @@ public class TeacherService {
     @Transactional
     public void update(Teacher teacher, UUID id) {
         teacherRepository.update(teacher, id);
+    }
+
+    public List<Teacher> findAllTeachersById(UUID id) {
+        return teacherRepository.findAllTeachersById(id);
     }
 }

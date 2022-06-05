@@ -7,9 +7,11 @@
 </head>
 <body>
 <form action="#"
-      th:action="@{/api/courses/save}"
+      th:action="@{'/api/courses/save/'+ ${id}}"
       method="post"
       th:object="${emptyCourse}">
+
+    <input type="hidden" th:field="${emptyCourse.id}">
 
     <label for="name">name</label>
     <input id="name" th:field="${emptyCourse.name}" placeholder="example">

@@ -1,11 +1,11 @@
 package thymeleaf.repositories;
 
 import org.springframework.stereotype.Repository;
-import thymeleaf.models.Student;
 import thymeleaf.models.Teacher;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
@@ -19,27 +19,23 @@ public class TeacherRepository {
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 
-    @Transactional
     public List<Teacher> findAll() {
         return entityManager
                 .createQuery("select t from Teacher t", Teacher.class)
                 .getResultList();
     }
 
-    @Transactional
     public void save(Teacher teacher) {
         entityManager.getTransaction().begin();
         entityManager.persist(teacher);
         entityManager.getTransaction().commit();
     }
 
-    @Transactional
     public Teacher findById(UUID teacherId) {
         return entityManager.find(Teacher.class, teacherId);
     }
 
-    @Transactional
-    public void update(Teacher teacher, UUID id){
+    public void update(Teacher teacher, UUID id) {
         Teacher teacher1 = findById(id);
         teacher1.setFirstName(teacher.getFirstName());
         teacher1.setEmail(teacher.getEmail());
@@ -47,8 +43,13 @@ public class TeacherRepository {
         entityManager.persist(teacher1);
     }
 
-    @Transactional
-    public void deleteById(UUID teacherId) {
-        entityManager.remove(entityManager.find(Teacher.class, teacherId));
+    public List<Teacher> findAllTeachersById(UUID id) {
+
+        List<Teacher> teachers = entityManager.createQuery
+                        ("select t from Teacher t where t.course.id=?1", Teacher.class).
+                setParameter(1, id).
+                getResultList();
+
+        return teachers;
     }
 }

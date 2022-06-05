@@ -48,7 +48,7 @@ public class CompanyController {
 
         companyService.save(company);
 
-        return "redirect:/api/companies";
+        return "redirect:/api/companies/";
     }
 
     @GetMapping("/update/{id}")
@@ -58,10 +58,16 @@ public class CompanyController {
     }
 
 
-    @PostMapping("/{id}")
+    @PostMapping("/update/{id}")
     public String updateCompany(@ModelAttribute("company") Company company,
                                 @PathVariable("id") UUID id){
         companyService.update(company, id);
+        return "redirect:/api/companies";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteCompany(@PathVariable("id") UUID id){
+        companyService.deleteById(id);
         return "redirect:/api/companies";
     }
 }
@@ -69,5 +75,4 @@ public class CompanyController {
 //    @PutMapping("/findBy/{id}")
 //    public String findCompanyById(@PathVariable UUID id) {
 //        companyService.findById(id);
-//
 //}
