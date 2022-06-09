@@ -1,7 +1,6 @@
 package thymeleaf.repositories;
 
 import org.springframework.stereotype.Repository;
-import thymeleaf.models.Group;
 import thymeleaf.models.Student;
 
 import javax.persistence.EntityManager;
@@ -20,31 +19,27 @@ public class StudentRepository {
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 
-    @Transactional
     public List<Student> findAll() {
         return entityManager
                 .createQuery("select s from Student s", Student.class)
                 .getResultList();
     }
 
-    @Transactional
-    public void save(Student student, UUID id) {
+    public void save(Student student) {
         entityManager.getTransaction().begin();
         entityManager.persist(student);
         entityManager.getTransaction().commit();
     }
 
-    @Transactional
     public Student findById(UUID studentId) {
         return entityManager.find(Student.class, studentId);
     }
-
     public void update(Student student, UUID id){
         Student student1 = findById(id);
         student1.setName(student.getName());
         student1.setEmail(student.getEmail());
         student1.setStudyFormat(student.getStudyFormat());
-        entityManager.persist(student1);
+//        entityManager.persist(student1);
     }
 
     public List<Student> findAllStudentsById(UUID groupId) {
@@ -63,8 +58,7 @@ public class StudentRepository {
         return students;
     }
 
-    @Transactional
     public void deleteById(UUID studentId) {
-        entityManager.remove(entityManager.find(Student.class, studentId));
+        entityManager.remove(findById(studentId));
     }
 }

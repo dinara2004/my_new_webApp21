@@ -19,21 +19,18 @@ public class CourseRepository {
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 
-    @Transactional
     public List<Course> findAll() {
         return entityManager
                 .createQuery("select c from Course c", Course.class)
                 .getResultList();
     }
 
-    @Transactional
     public void save(Course course) {
         entityManager.getTransaction().begin();
         entityManager.persist(course);
         entityManager.getTransaction().commit();
     }
 
-    @Transactional
     public Course findById(UUID courseId) {
         return entityManager.find(Course.class, courseId);
     }
@@ -46,9 +43,16 @@ public class CourseRepository {
     }
 
 
-    @Transactional
     public void deleteById(UUID courseId) {
-        entityManager.remove(entityManager.find(Course.class, courseId));
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        transaction.begin();
+
+        Course course = findById(courseId);
+
+        entityManager.remove(course);
+
+        transaction.commit();
     }
 
 

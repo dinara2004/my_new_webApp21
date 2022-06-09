@@ -31,7 +31,8 @@ public class Student {
     @ToString.Exclude
     private List<Course> courses = new ArrayList<>();
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Group groups;
+
 
 }

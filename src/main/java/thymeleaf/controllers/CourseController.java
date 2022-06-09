@@ -74,11 +74,19 @@ public class CourseController {
         return "redirect:/api/courses/findBy/" + id1;
     }
 
-//    @PostMapping ("/update/{courseId}")
-//    public String update(Course course, @PathVariable Long courseId){
-//        Course byId = courseService.findById(courseId);
-//        Long id = byId.getCompany().getId();
-//        courseService.update(courseId, course);
-//        return "redirect:/api/courses/find/by/" + id;
+
+    @GetMapping("/delete/{courseId}")
+    public String deleteById(@PathVariable("courseId") UUID courseId){
+        Course course = courseService.findById(courseId);
+        UUID id = course.getCompany().getId();
+        courseService.deleteById(courseId);
+        return "redirect:/api/courses/findBy/" + id;
+    }
+
+//    @GetMapping("/delete/{courseId}")
+//    public String deleteById(@PathVariable("courseId") UUID courseId) {
+//        courseService.deleteById(courseId);
+//        return "redirect:/api/course/findBy/";
 //    }
+
 }

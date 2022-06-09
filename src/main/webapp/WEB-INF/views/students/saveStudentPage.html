@@ -1,39 +1,84 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>save new student</title>
+    <title>Save new student</title>
+    <style>
+        body {
+            background-image: url('https://interdecor22.ru/wp-content/gallery/podsvetka-domov/dom.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+    </style>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        onlineFormat{
+            margin-left: auto;
+        }
+    </style>
 </head>
 <body>
-<form action="#"
+
+<p style="text-align:center;"><img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzPmP40oDNG4ms1Q3wn8gRHeKZRYHbRt0pejXzQZFZW78he3SwBC6qe4Nd0o-aZBwU_Rs&usqp=CAU" class="img-fluid "
+        alt="~ Register Your Company ~" width="250" height="250"></p>
+<form style="margin: auto; " th:method="POST"
       th:action="@{'/api/students/save/' + ${id}}"
-      method="post"
       th:object="${emptyStudent}">
 
     <input type="hidden" th:field="${emptyStudent.id}">
 
-    <label for="name">name</label>
-    <input id="name" th:field="${emptyStudent.name}" placeholder="example">
-    <br><br>
+    <div class="form-floating mb-3">
+        <label for="name">Write the name of student</label>
+        <input type="text" class="form-control" th:field="*{name}" id="name"
+               style="text-align: center; width: 500px; margin: auto" placeholder="name"/>
+    </div>
+    <div class="form-floating mb-3">
+        <label for="email">Write email of student</label>
+        <input type="text" class="form-control" th:field="*{email}" id="email"
+               style="text-align: center; width: 500px; margin: auto" placeholder="email"/>
+    </div>
+    <div class="form-floating mb-3">
+<!--        <label for="studyFormat">Write study format of student</label>-->
+        <label for="onlineFormat">online</label>
+        <input type="radio" value="ONLINE" th:field="*{studyFormat}" id="onlineFormat">
 
-    <label for="email">email</label>
-    <input id="email" th:field="${emptyStudent.email}" placeholder="example">
-    <br><br>
+        <label for="offlineFormat">offline</label>
+        <input type="radio" style="text-align: center; margin: auto"  value="OFFLINE" th:field="*{studyFormat}" id="offlineFormat">
+<!--    <p>Choose your study format</p>-->
 
-    <label for="studyFormat">studyFormat</label>
-    <input id="studyFormat" th:field="${emptyStudent.studyFormat}" placeholder="example">
-    <br><br>
+<!--    <div class="form-check">-->
+<!--        <input th:each="studyFormat : ${T(my_new_webApp2.thymeleaf.enums.StudyFormat).values()}"class="form-check-input" type="radio" th:value="*{studyFormat}" name="flexRadioDefault" id="flexRadioDefault1">-->
+<!--        <label class="form-check-label" for="flexRadioDefault1">-->
+<!--        ONLINE-->
+<!--        </label>-->
+    </div>
+<!--    <div class="form-check">-->
+<!--        <input class="form-check-input" type="radio" th:value="*{studyFormat}" name="flexRadioDefault" id="flexRadioDefault2" checked>-->
+<!--        <label class="form-check-label" for="flexRadioDefault2">-->
+<!--            OFFLINE-->
+<!--        </label>-->
+<!--    </div>-->
 
-    <button type="submit">save</button>
+<!--        <input type="text" class="form-control" th:field="*{studyFormat}" id="studyFormat"-->
+<!--               style="text-align: center; width: 500px; margin: auto" placeholder="studyFormat"/>-->
+<!--    </div>-->
+
+    <p style="text-align:center;">
+        <input type="submit" class="btn btn-outline-primary btn-lg " value="Save student"/>
+    </p>
+    <p style="text-align:center;">
+        <a th:href="@{'/api/groups/'}">
+            <input type="submit" class="btn btn-outline-primary btn-lg" value="Go back"/>
+        </a>
+    </p>
 </form>
-
-<div>
-    <a th:href="@{/api/groups/}">
-        <button>go back</button>
-    </a>
-</div>
-
-
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 </body>
 </html>

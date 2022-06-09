@@ -21,12 +21,10 @@ public class GroupService {
         this.courseRepository = courseRepository;
     }
 
-    @Transactional
     public List<Group> findAllGroups() {
         return groupRepository.findAll();
     }
 
-    @Transactional
     public void save(Group group, UUID courseId) {
         Course byId = courseRepository.findById(courseId);
         group.setCourse(byId);
@@ -34,17 +32,19 @@ public class GroupService {
         groupRepository.save(group);
     }
 
-    @Transactional
     public Group findById(UUID id){
         return groupRepository.findById(id);
     }
 
-    @Transactional
     public void update(Group group, UUID id) {
         groupRepository.update(group, id);
     }
 
     public List<Group> findAllGroupsById(UUID id) {
         return groupRepository.findAllGroupsById(id);
+    }
+
+    public void deleteById(UUID groupId){
+        groupRepository.deleteById(groupId);
     }
 }

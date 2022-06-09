@@ -21,12 +21,10 @@ public class TeacherService {
         this.courseRepository = courseRepository;
     }
 
-    @Transactional
     public List<Teacher> findAllTeachers() {
         return teacherRepository.findAll();
     }
 
-    @Transactional
     public void save(Teacher teacher, UUID courseId) {
         final Course byId = courseRepository.findById(courseId);
         teacher.setCourse(byId);
@@ -38,12 +36,17 @@ public class TeacherService {
         return teacherRepository.findById(id);
     }
 
-    @Transactional
     public void update(Teacher teacher, UUID id) {
-        teacherRepository.update(teacher, id);
+        teacherRepository.
+                update(teacher, id);
     }
 
     public List<Teacher> findAllTeachersById(UUID id) {
         return teacherRepository.findAllTeachersById(id);
     }
+
+    public void deleteById(UUID teacherId) {
+        teacherRepository.deleteById(teacherId);
+    }
+
 }

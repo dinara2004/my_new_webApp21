@@ -70,4 +70,21 @@ public class TeacherController {
         teacherService.update(teacher, id);
         return "redirect:/api/teachers/findBy/" + id1;
     }
+
+    @GetMapping("/delete/{teacherId}")
+    public String deleteById(@PathVariable("teacherId") UUID teacherId, Model model){
+        System.out.println("teacherId = " + teacherId);
+
+        Teacher teacher = teacherService.findById(teacherId);
+
+        UUID id1 = teacher.getCourse().getId();
+
+        teacherService.deleteById(teacherId);
+
+
+        model.addAttribute("courseId", id1);
+        model.addAttribute("teachers", teacherService.findAllTeachers());
+
+        return "/teachers/allTeachers";
+    }
 }

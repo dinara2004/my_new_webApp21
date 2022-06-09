@@ -1,7 +1,9 @@
 package thymeleaf.services;
 
 import org.springframework.stereotype.Service;
+import thymeleaf.models.Group;
 import thymeleaf.models.Student;
+import thymeleaf.repositories.GroupRepository;
 import thymeleaf.repositories.StudentRepository;
 
 import javax.transaction.Transactional;
@@ -12,22 +14,24 @@ import java.util.UUID;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final GroupRepository groupRepository;
 
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, GroupRepository groupRepository) {
         this.studentRepository = studentRepository;
+        this.groupRepository = groupRepository;
     }
 
-    @Transactional
     public List<Student> findAllStudents() {
         return studentRepository.findAll();
     }
 
-    @Transactional
     public void save(Student student, UUID id) {
-        studentRepository.save(student, id);
+        Group group = groupRepository.findById(id);
+        group.setStudent(student);
+        student.setGroups(group);
+        studentRepository.save(student);
     }
 
-    @Transactional
     public Student findById(UUID id){
         return studentRepository.findById(id);
     }
@@ -36,8 +40,11 @@ public class StudentService {
         return studentRepository.findAllStudentsById(id);
     }
 
-    @Transactional
     public void update(Student student, UUID id) {
         studentRepository.update(student, id);
+    }
+
+    public void deleteById(UUID studentId) {
+        studentRepository.deleteById(studentId);
     }
 }

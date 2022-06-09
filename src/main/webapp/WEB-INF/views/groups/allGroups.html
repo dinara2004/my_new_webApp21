@@ -1,54 +1,87 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>groups</title>
+    <title>All groups</title>
     <style>
-        tr:nth-child(even) {
-            background-color: #dddddd;
+        body {
+            background-image: url('https://lp-cms-production.imgix.net/2021-03/shutterstock_304631102.jpg?auto=format&q=40&w=1920&ar=16%3A9&h=1080');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
         }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
 </head>
 <body>
-<table style="width: 50%">
+<br>
+<br>
+<p style="text-align:center;"><img
+        src="https://images.squarespace-cdn.com/content/v1/5ea237e587e03021f9ef8cc2/1591632715798-GZ810CZ0DMW3J0HD2ODF/Group-members.jpg?format=1000w"
+        class="img-fluid "
+        alt="~ Groups ~" width="200" height="200"></p>
+
+<table style="width:75%;margin: 0px auto;" class="table table-primary table-hover">
     <thead>
-    <tr style="background-color: beige; color: darkcyan">
-        <th>id</th>
-        <th>groupName</th>
-        <th>dateOfStart</th>
-        <th>dateOfFinish</th>
-        <th>courses</th>
-        <th>students</th>
-        <th>update</th>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">GroupName</th>
+        <th scope="col">DateOfStart</th>
+        <th scope="col">DateOfFinish</th>
+        <th scope="col">Courses</th>
+        <th scope="col">Students</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
     </tr>
-    <tr th:each="group : ${groups}">
-        <td th:text="${group.id}"></td>
-        <td th:text="${group.groupName}"></td>
+    </thead>
+    <tbody th:each="group :${groups}">
+    <tr>
+        <th scope="row" th:text="${group.id}"></th>
+        <td><a style="color: black"
+               th:text="${group.groupName}"></a></td>
         <td th:text="${group.dateOfStart}"></td>
         <td th:text="${group.dateOfFinish}"></td>
+
         <td>
-        <a th:href="@{'/api/courses/findBy/' + ${groups.get(0).getCourses().get(0).getCompany().id}}">
-            <button>go to courses</button>
-        </a>
-        </td>
-        <td>
-            <a th:href="@{'/api/students/findBy/' + ${group.getId()}}">
-                <button>students</button>
+            <a class="btn btn-outline-primary" href="#offcanvasExample" role="button"
+               th:href="@{'/api/courses/findBy/' + ${groups.get(0).getCourses().get(0).getCompany().id}}">
+                Go to course
             </a>
         </td>
+
         <td>
-            <a th:href="@{'/api/groups/update/' + ${group.getId()}}">
-                <button>update</button>
+            <a th:href="@{'/api/students/findBy/' + ${group.getId()}}">
+                <input type="submit" class="btn btn-outline-primary" th:value="Students">
+            </a>
+        </td>
+
+        <td>
+            <a class="btn btn-outline-primary" href="#offcanvasExample" role="button"
+               th:href="@{'/api/groups/update/' + ${groups.get(0).getId()}}">Update
+            </a>
+        </td>
+
+        <td>
+            <a class="btn btn-outline-primary" href="#offcanvasExample" role="button"
+               th:href="@{'/api/groups/delete/' + ${group.getId()}}">Delete
             </a>
         </td>
     </tr>
-
-    <a th:href="@{'/api/groups/save/' + ${courseId}}">
-        <button>save</button>
-    </a>
-
-    </thead>
+    </tbody>
 </table>
+<br/>
+<br/>
+
+<p style="text-align:center;">
+    <a class="btn btn-outline-primary" role="button" th:href="@{'/api/groups/save/' + ${courseId}}">
+        Add new groups
+    </a>
+</p>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 </body>
 </html>

@@ -27,7 +27,7 @@ public class Course {
     @ManyToOne(cascade = CascadeType.MERGE)
     private Company company;
 
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH},mappedBy = "courses")
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH},mappedBy = "courses")
     @ToString.Exclude
     private List<Group> groups = new ArrayList<>();
 
@@ -43,4 +43,5 @@ public class Course {
     public void setGroup(Group group){
         this.groups.add(group);
     }
+
 }

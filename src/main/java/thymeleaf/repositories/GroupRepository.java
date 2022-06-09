@@ -19,21 +19,18 @@ public class GroupRepository {
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 
-    @Transactional
     public List<Group> findAll() {
         return entityManager
                 .createQuery("select g from Group g", Group.class)
                 .getResultList();
     }
 
-    @Transactional
     public void save(Group group) {
         entityManager.getTransaction().begin();
         entityManager.persist(group);
         entityManager.getTransaction().commit();
     }
 
-    @Transactional
     public Group findById(UUID groupId) {
         return entityManager.find(Group.class, groupId);
     }
@@ -47,9 +44,8 @@ public class GroupRepository {
         entityManager.persist(group1);
     }
 
-    @Transactional
     public void deleteById(UUID groupId) {
-        entityManager.remove(entityManager.find(Group.class, groupId));
+        entityManager.remove(findById(groupId));
     }
 
 

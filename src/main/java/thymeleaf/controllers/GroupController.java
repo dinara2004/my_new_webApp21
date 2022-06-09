@@ -80,4 +80,12 @@ public class GroupController {
         groupService.update(group, id);
         return "redirect:/api/groups/findBy/" + id1;
     }
+
+    @GetMapping("delete/{groupId}")
+    public String deleteByID(@PathVariable UUID groupId){
+        Group group = groupService.findById(groupId);
+        UUID id = group.getCourses().get(0).getId();
+        groupService.deleteById(groupId);
+        return "redirect:/api/groups/findBy/" + id;
+    }
 }

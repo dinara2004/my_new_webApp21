@@ -79,4 +79,12 @@ public class StudentController {
         studentService.update(student, id);
         return "redirect:/api/students/findBy/" + id1;
     }
+
+    @GetMapping ("/delete/{studentId}")
+    public String deleteById(@PathVariable UUID studentId){
+        Student id1 = studentService.findById(studentId);
+        UUID id = id1.getGroups().getId();
+        studentService.deleteById(studentId);
+        return "redirect:/api/students/findBy/" + id;
+    }
 }

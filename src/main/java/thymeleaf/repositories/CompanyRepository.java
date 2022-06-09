@@ -21,14 +21,12 @@ public class CompanyRepository {
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 
-    @Transactional
     public List<Company> findAll() {
         return entityManager
                 .createQuery("select c from Company c", Company.class)
                 .getResultList();
     }
 
-    @Transactional
     public void save(Company company) {
         entityManager.getTransaction().begin();
         entityManager.persist(company);
@@ -46,8 +44,12 @@ public class CompanyRepository {
         entityManager.persist(company1);
     }
 
+
     public void deleteById(UUID companyId) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
         entityManager.remove(findById(companyId));
+        transaction.commit();
     }
 
     public void save(Course course, UUID id) {

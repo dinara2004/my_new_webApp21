@@ -37,6 +37,10 @@ public class CourseService {
         courseRepository.update(course, id);
     }
 
+    public void deleteById(UUID courseId){
+        courseRepository.deleteById(courseId);
+    }
+
     public List<Course> findAllCoursesById(UUID id) {
         return courseRepository.findAllCoursesById(id);
     }

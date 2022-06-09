@@ -25,7 +25,6 @@ public class Teacher {
     private String lastName;
 
     @OneToOne
-//    @JoinColumn(name = ////
     @ToString.Exclude
     private Course course;
 

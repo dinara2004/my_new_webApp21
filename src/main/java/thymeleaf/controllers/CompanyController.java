@@ -65,8 +65,8 @@ public class CompanyController {
         return "redirect:/api/companies";
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteCompany(@PathVariable("id") UUID id){
+    @GetMapping("/delete/{companyId}")
+    public String deleteCompany(@PathVariable("companyId") UUID id){
         companyService.deleteById(id);
         return "redirect:/api/companies";
     }

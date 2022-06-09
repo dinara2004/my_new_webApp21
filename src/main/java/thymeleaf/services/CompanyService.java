@@ -17,19 +17,16 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
-    @Transactional
     public List<Company> findAllCompanies() {
         return companyRepository.findAll();
     }
 
-    @Transactional
     public void save(Company company) {
         System.out.println(company.getCompanyName());
         companyRepository.save(company);
         System.out.println("company successfully saved!");
     }
 
-    @Transactional
     public Company findById(UUID id){
         return companyRepository.findById(id);
     }
@@ -39,8 +36,7 @@ public class CompanyService {
     }
 
 
-    @Transactional
-    public void deleteById(UUID id){
-        companyRepository.deleteById(id);
+    public void deleteById(UUID companyId){
+        companyRepository.deleteById(companyId);
     }
 }

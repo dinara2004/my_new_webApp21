@@ -52,4 +52,14 @@ public class TeacherRepository {
 
         return teachers;
     }
+
+    public void deleteById(UUID teacherId) {
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        transaction.begin();
+
+        entityManager.remove(entityManager.find(Teacher.class, teacherId));
+
+        transaction.commit();
+    }
 }
