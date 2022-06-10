@@ -29,7 +29,6 @@
         <th scope="col">ID</th>
         <th scope="col">Course</th>
         <th scope="col">Duration</th>
-        <th scope="col">Companies</th>
         <th scope="col">Groups</th>
         <th scope="col">Teachers</th>
         <th scope="col">Update</th>
@@ -42,12 +41,6 @@
         <td><a style="color: black"
                th:text="${course.name}"></a></td>
         <td th:text="${course.duration}"></td>
-
-        <td>
-            <a class="btn btn-outline-primary" href="#offcanvasExample" role="button"
-               th:href="@{'/api/companies/'}">Companies
-            </a>
-        </td>
 
         <td>
             <a th:href="@{'/api/groups/findBy/' + ${course.getId()}}">

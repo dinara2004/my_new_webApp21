@@ -5,13 +5,12 @@
     <title>Save new student</title>
     <style>
         body {
-            background-image: url('https://interdecor22.ru/wp-content/gallery/podsvetka-domov/dom.jpg');
+            background-image: url('https://wallpaperboat.com/wp-content/uploads/2020/06/08/44326/aesthetic-flower-01.jpg');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: 100% 100%;
         }
     </style>
-    <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <style>
@@ -34,38 +33,18 @@
     <div class="form-floating mb-3">
         <label for="name">Write the name of student</label>
         <input type="text" class="form-control" th:field="*{name}" id="name"
-               style="text-align: center; width: 500px; margin: auto" placeholder="name"/>
+               style="text-align: center; color: white; width: 500px; margin: auto" placeholder="name"/>
     </div>
     <div class="form-floating mb-3">
         <label for="email">Write email of student</label>
         <input type="text" class="form-control" th:field="*{email}" id="email"
-               style="text-align: center; width: 500px; margin: auto" placeholder="email"/>
+               style="text-align: center; color: white; width: 500px; margin: auto" placeholder="email"/>
     </div>
-    <div class="form-floating mb-3">
-<!--        <label for="studyFormat">Write study format of student</label>-->
-        <label for="onlineFormat">online</label>
-        <input type="radio" value="ONLINE" th:field="*{studyFormat}" id="onlineFormat">
-
-        <label for="offlineFormat">offline</label>
-        <input type="radio" style="text-align: center; margin: auto"  value="OFFLINE" th:field="*{studyFormat}" id="offlineFormat">
-<!--    <p>Choose your study format</p>-->
-
-<!--    <div class="form-check">-->
-<!--        <input th:each="studyFormat : ${T(my_new_webApp2.thymeleaf.enums.StudyFormat).values()}"class="form-check-input" type="radio" th:value="*{studyFormat}" name="flexRadioDefault" id="flexRadioDefault1">-->
-<!--        <label class="form-check-label" for="flexRadioDefault1">-->
-<!--        ONLINE-->
-<!--        </label>-->
-    </div>
-<!--    <div class="form-check">-->
-<!--        <input class="form-check-input" type="radio" th:value="*{studyFormat}" name="flexRadioDefault" id="flexRadioDefault2" checked>-->
-<!--        <label class="form-check-label" for="flexRadioDefault2">-->
-<!--            OFFLINE-->
-<!--        </label>-->
-<!--    </div>-->
-
-<!--        <input type="text" class="form-control" th:field="*{studyFormat}" id="studyFormat"-->
-<!--               style="text-align: center; width: 500px; margin: auto" placeholder="studyFormat"/>-->
-<!--    </div>-->
+        <label style="text-align: center">Write study format of student</label>
+        <input style="text-align: center; color: white" type="radio" value="ONLINE" th:field="*{studyFormat}" id="onlineFormat">
+        <label for="onlineFormat" style="background-color: cadetblue">ONLINE</label>
+        <input style="text-align: center; color: white" type="radio" value="OFFLINE" th:field="*{studyFormat}" id="offlineFormat">
+        <label for="offlineFormat" style="background-color: cadetblue">OFFLINE</label>
 
     <p style="text-align:center;">
         <input type="submit" class="btn btn-outline-primary btn-lg " value="Save student"/>
@@ -76,7 +55,6 @@
         </a>
     </p>
 </form>
-<!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>

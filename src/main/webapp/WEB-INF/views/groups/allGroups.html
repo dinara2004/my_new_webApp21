@@ -30,7 +30,6 @@
         <th scope="col">GroupName</th>
         <th scope="col">DateOfStart</th>
         <th scope="col">DateOfFinish</th>
-        <th scope="col">Courses</th>
         <th scope="col">Students</th>
         <th scope="col">Update</th>
         <th scope="col">Delete</th>
@@ -43,13 +42,6 @@
                th:text="${group.groupName}"></a></td>
         <td th:text="${group.dateOfStart}"></td>
         <td th:text="${group.dateOfFinish}"></td>
-
-        <td>
-            <a class="btn btn-outline-primary" href="#offcanvasExample" role="button"
-               th:href="@{'/api/courses/findBy/' + ${groups.get(0).getCourses().get(0).getCompany().id}}">
-                Go to course
-            </a>
-        </td>
 
         <td>
             <a th:href="@{'/api/students/findBy/' + ${group.getId()}}">
@@ -79,7 +71,12 @@
         Add new groups
     </a>
 </p>
-<!-- JavaScript Bundle with Popper -->
+<p style="text-align:center;">
+    <a class="btn btn-outline-primary" href="#offcanvasExample" role="button"
+       th:href="@{'/api/courses/findBy/' + ${groups.get(0).getCourses().get(0).getCompany().id}}">
+        Go back
+    </a>
+</p>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>

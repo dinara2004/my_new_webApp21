@@ -16,9 +16,13 @@
         <input type="text" class="form-control"  th:field="*{name}" id="name">
         <label for="email" class="form-label">email</label>
         <input type="text" class="form-control" th:field="*{email}" id="email">
-        <label for="studyFormat" class="form-label">Study format</label>
-        <input type="text" class="form-control" th:field="*{studyFormat}" id="studyFormat">
-        <input type="submit" value="update"/>
+    <label style="text-align: center">Write study format of student</label>
+    <input style="text-align: center; color: white" type="radio" value="ONLINE" th:field="*{studyFormat}" id="onlineFormat">
+    <label for="onlineFormat" style="background-color: cadetblue">ONLINE</label>
+    <input style="text-align: center; color: white" type="radio" value="OFFLINE" th:field="*{studyFormat}" id="offlineFormat">
+    <label for="offlineFormat" style="background-color: cadetblue">OFFLINE</label>
+
+    <input type="submit" value="update"/>
 </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
