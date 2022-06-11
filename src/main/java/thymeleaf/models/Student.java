@@ -27,9 +27,9 @@ public class Student {
 
     private StudyFormat studyFormat;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    @ToString.Exclude
-    private List<Course> courses = new ArrayList<>();
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+//    @ToString.Exclude
+//    private List<Course> courses = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.MERGE)
     private Group groups;

@@ -31,9 +31,9 @@ public class Course {
     @ToString.Exclude
     private List<Group> groups = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "courses")
-    @ToString.Exclude
-    private List<Student> students = new ArrayList<>();
+//    @ManyToMany(mappedBy = "courses")
+//    @ToString.Exclude
+//    private List<Student> students = new ArrayList<>();
 
     @OneToOne(mappedBy = "course",
             cascade = {REMOVE},
